@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProtonVPN Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
+    <script defer src="script.js"></script>
+	<script type="module" defer>import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";polyfillCountryFlagEmojis();</script>
+    <link rel="stylesheet" href="styles.css">
+	<link rel="icon" href="proton.svg" type="image/x-icon">
+</head>
+<body class="bg-gray-100 text-gray-800 p-6 min-h-screen">
+
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md">
+        <img id="logo" src="logo.svg" alt="Логотип">
+        
+        <div id="alertBox" class="hidden mb-4 p-4 rounded text-sm font-semibold"></div>
+
+<!-- ШАГ 1: Настройки Proxy API -->
+        <div class="mb-8 border-b pb-6">
+            <h2 class="text-lg font-semibold mb-4">1. Создайте временный аккаунт ProtonVPN</h2>
+            <div class="space-y-4">
+                <button id="btnConnect" onclick="connectProxy()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+                    Подключиться и получить серверы
+                </button>
+                
+                <!-- Контейнер таймера -->
+                <div id="timerContainer" class="hidden items-center space-x-3">
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded font-mono font-semibold" id="timerText">24:00:00</span>
+                    <span class="text-sm text-gray-600">Сессия активна</span>
+                    <button onclick="clearSession()" class="text-sm text-red-500 hover:text-red-700 underline transition">
+                        Сбросить
+                    </button>
+                </div>
+            </div>
+        </div>
+
+<!-- ШАГ 2: Выбор сервера и генерация -->
+        <div id="step2" class="mb-8 border-b pb-6 hidden">
+            <h2 class="text-lg font-semibold mb-4">2. Выберите сервер</h2>
+            <div id="filterContainer" class="flex flex-wrap gap-2 mb-4"></div>
+            <div class="space-y-4">
+                <div>
+                    <select id="serverSelect" class="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-indigo-300"></select>
+                </div>
+                <button id="btnGenerate" onclick="generateConfig()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+                    Сгенерировать конфиг
+                </button>
+            </div>
+        </div>
+
+        <!-- ШАГ 3: Результат -->
+        <div id="step3" class="hidden">
+            <h2 class="text-lg font-semibold mb-4">3. Скачайте конфиг</h2>
+            <textarea id="wgConfigText" rows="10" class="w-full border px-3 py-2 rounded bg-gray-50 font-mono text-sm mb-4 focus:outline-none" readonly></textarea>
+            <button onclick="downloadConfig()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Скачать .conf файл
+            </button>
+        </div>
+    </div>
+</body>
+</html>

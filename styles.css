@@ -1,0 +1,48 @@
+#btnConnect, #logo {
+  display: block;
+  margin: 0 auto;
+}
+
+#btnGenerate {
+  display: block;
+  margin: auto;
+  margin-top: 24px;
+}
+
+#timerContainer {justify-content: center}
+#alertBox {text-align: center}
+
+/* Базовый стиль для всех переключателей */
+.filter-option {
+    cursor: pointer;
+
+    border-radius: 25px;
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500;
+    transition: all 0.2s ease;
+    width: 75px; /* w-36 (144px) */
+    text-align: center;
+    display: inline-block;
+    color: #374151; /* text-gray-700 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    border: 1px solid #6d4aff;
+}
+
+/* Эффект при наведении на неактивную кнопку */
+.filter-option:hover {
+    background-color: #d1d5db; /* bg-gray-300 */
+}
+
+/* Активное состояние */
+.filter-option.active {
+    background-color: #4f46e5; /* bg-indigo-600 */
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* shadow-md */
+}
+
+body {
+    font-family: "Twemoji Country Flags", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
