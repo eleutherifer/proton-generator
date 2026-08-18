@@ -819,3 +819,60 @@ if (selectDomainBtn) {
     }
 });
 }
+
+function toggleClashSettings() {
+    const isClash = document.getElementById('clash')?.checked;
+    
+    const excludeLan = document.getElementById('switchOption4'); //[cite: 1]
+    const persistentKeepalive = document.getElementById('switchOption5'); //[cite: 1]
+    const keepaliveInput = document.getElementById('keepaliveInput'); //[cite: 1]
+
+    const label4 = excludeLan?.closest('.switch-label');
+    const label5 = persistentKeepalive?.closest('.switch-label');
+    
+    const track4 = label4?.querySelector('.switch-track');
+    const track5 = label5?.querySelector('.switch-track');
+
+    if (isClash) {
+        if (excludeLan) {
+            excludeLan.disabled = true;
+            excludeLan.checked = false; //[cite: 1]
+        }
+        if (label4) label4.classList.add('opacity-50', 'cursor-not-allowed');
+        if (track4) track4.classList.add('cursor-not-allowed');
+
+        if (persistentKeepalive) {
+            persistentKeepalive.disabled = true;
+            persistentKeepalive.checked = false; //[cite: 1]
+        }
+        if (label5) label5.classList.add('opacity-50', 'cursor-not-allowed');
+        if (track5) track5.classList.add('cursor-not-allowed');
+
+        if (keepaliveInput) {
+            keepaliveInput.disabled = true;
+            keepaliveInput.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    } else {
+        if (excludeLan) excludeLan.disabled = false;
+        if (label4) label4.classList.remove('opacity-50', 'cursor-not-allowed');
+        if (track4) track4.classList.remove('cursor-not-allowed');
+
+        if (persistentKeepalive) persistentKeepalive.disabled = false;
+        if (label5) label5.classList.remove('opacity-50', 'cursor-not-allowed');
+        if (track5) track5.classList.remove('cursor-not-allowed');
+
+        if (keepaliveInput) {
+            keepaliveInput.disabled = false;
+            keepaliveInput.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
+}
+
+// Привязываем обработчик к радиокнопкам выбора клиента и вызываем при загрузке[cite: 2]
+document.querySelectorAll('input[name="option"]').forEach(radio => {
+    radio.addEventListener('change', toggleClashSettings);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    toggleClashSettings();
+});
