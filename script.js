@@ -1,3 +1,19 @@
+document.getElementById('telegramButton').onclick = function() {
+    window.location.href = 'https://t.me/warp_1_1_1_1';
+}
+
+document.getElementById('projectsButton').onclick = function() {
+    window.location.href = 'https://my-other-projects.vercel.app/';
+}
+
+document.getElementById('adButton').onclick = function() {
+    window.location.href = 'https://t.me/AgnosiaVPN_bot'
+}
+
+document.getElementById('promoButton').onclick = function() {
+    window.location.href = 'https://storage.googleapis.com/amnezia/amnezia.org?m-path=premium&arf=VG755WBZDBAPGGYM';
+}
+
 document.getElementById('keepaliveInput')?.addEventListener('input', () => generateConfig());
 let currentSession = null;
 let serversList = [];
