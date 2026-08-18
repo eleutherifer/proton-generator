@@ -1,3 +1,19 @@
+document.getElementById('telegramButton').onclick = function() {
+    window.location.href = 'https://t.me/warp_1_1_1_1';
+}
+
+document.getElementById('projectsButton').onclick = function() {
+    window.location.href = 'https://my-other-projects.vercel.app/';
+}
+
+document.getElementById('adButton').onclick = function() {
+    window.location.href = 'https://t.me/AgnosiaVPN_bot'
+}
+
+document.getElementById('promoButton').onclick = function() {
+    window.location.href = 'https://storage.googleapis.com/amnezia/amnezia.org?m-path=premium&arf=VG755WBZDBAPGGYM';
+}
+
 document.getElementById('keepaliveInput')?.addEventListener('input', () => generateConfig());
 let currentSession = null;
 let serversList = [];
@@ -276,17 +292,18 @@ async function getOrGeneratePrivateKey() {
 // Формирование текста конфигурации для любого сервера
 function buildConfigString(server, wgPrivKeyBase64) {
     const selectedPort = document.querySelector('input[name="wgPort"]:checked')?.value || '51820';
-    let interfaceOptions = '';
+    const isClash = document.getElementById('clash')?.checked;
 
     // --- AWG 1.0 ---
     const isAwg1 = document.getElementById('switchOption1')?.checked;
+    let jc = '', jmin = '', jmax = '';
+    let interfaceOptions = '';
+
     if (isAwg1) {
-        let jc = '3', jmin = '1', jmax = '3';
+        jc = '3'; jmin = '1'; jmax = '3';
 
         if (document.getElementById('junk2')?.checked) {
-            jc = '30';
-            jmin = '10';
-            jmax = '30';
+            jc = '30'; jmin = '10'; jmax = '30';
         } else if (document.getElementById('junk3')?.checked) {
             const jcInput = document.getElementById('jc1');
             const jminInput = document.getElementById('jmin1');
@@ -302,23 +319,21 @@ function buildConfigString(server, wgPrivKeyBase64) {
 
     // --- AWG 2.0 ---
     const isAwg2 = document.getElementById('switchOption2')?.checked;
+    let i1Val = '';
     if (isAwg2) {
-        const isAwg = document.getElementById('awg')?.checked;
+        const isAwg = document.getElementById('awg')?.checked || isClash;
         const isWiresock = document.getElementById('wiresock')?.checked;
 
         if (isAwg) {
-            // Если выбран клиент AmneziaWG
             const i1Input = document.getElementById('i1');
-            const i1Val = i1Input?.value.trim() || '<b 0xce000000010897a297ecc34cd6dd000044d0ec2e2e1ea2991f467ace4222129b5a098823784694b4897b9986ae0b7280135fa85e196d9ad980b150122129ce2a9379531b0fd3e871ca5fdb883c369832f730e272d7b8b74f393f9f0fa43f11e510ecb2219a52984410c204cf875585340c62238e14ad04dff382f2c200e0ee22fe743b9c6b8b043121c5710ec289f471c91ee414fca8b8be8419ae8ce7ffc53837f6ade262891895f3f4cecd31bc93ac5599e18e4f01b472362b8056c3172b513051f8322d1062997ef4a383b01706598d08d48c221d30e74c7ce000cdad36b706b1bf9b0607c32ec4b3203a4ee21ab64df336212b9758280803fcab14933b0e7ee1e04a7becce3e2633f4852585c567894a5f9efe9706a151b615856647e8b7dba69ab357b3982f554549bef9256111b2d67afde0b496f16962d4957ff654232aa9e845b61463908309cfd9de0a6abf5f425f577d7e5f6440652aa8da5f73588e82e9470f3b21b27b28c649506ae1a7f5f15b876f56abc4615f49911549b9bb39dd804fde182bd2dcec0c33bad9b138ca07d4a4a1650a2c2686acea05727e2a78962a840ae428f55627516e73c83dd8893b02358e81b524b4d99fda6df52b3a8d7a5291326e7ac9d773c5b43b8444554ef5aea104a738ed650aa979674bbed38da58ac29d87c29d387d80b526065baeb073ce65f075ccb56e47533aef357dceaa8293a523c5f6f790be90e4731123d3c6152a70576e90b4ab5bc5ead01576c68ab633ff7d36dcde2a0b2c68897e1acfc4d6483aaaeb635dd63c96b2b6a7a2bfe042f6aed82e5363aa850aace12ee3b1a93f30d8ab9537df483152a5527faca21efc9981b304f11fc95336f5b9637b174c5a0659e2b22e159a9fed4b8e93047371175b1d6d9cc8ab745f3b2281537d1c75fb9451871864efa5d184c38c185fd203de206751b92620f7c369e031d2041e152040920ac2c5ab5340bfc9d0561176abf10a147287ea90758575ac6a9f5ac9f390d0d5b23ee12af583383d994e22c0cf42383834bcd3ada1b3825a0664d8f3fb678261d57601ddf94a8a68a7c273a18c08aa99c7ad8c6c42eab67718843597ec9930457359dfdfbce024afc2dcf9348579a57d8d3490b2fa99f278f1c37d87dad9b221acd575192ffae1784f8e60ec7cee4068b6b988f0433d96d6a1b1865f4e155e9fe020279f434f3bf1bd117b717b92f6cd1cc9bea7d45978bcc3f24bda631a36910110a6ec06da35f8966c9279d130347594f13e9e07514fa370754d1424c0a1545c5070ef9fb2acd14233e8a50bfc5978b5bdf8bc1714731f798d21e2004117c61f2989dd44f0cf027b27d4019e81ed4b5c31db347c4a3a4d85048d7093cf16753d7b0d15e078f5c7a5205dc2f87e330a1f716738dce1c6180e9d02869b5546f1c4d2748f8c90d9693cba4e0079297d22fd61402dea32ff0eb69ebd65a5d0b687d87e3a8b2c42b648aa723c7c7daf37abcc4bb85caea2ee8f55bec20e913b3324ab8f5c3304f820d42ad1b9f2ffc1a3af9927136b4419e1e579ab4c2ae3c776d293d397d575df181e6cae0a4ada5d67ecea171cca3288d57c7bbdaee3befe745fb7d634f70386d873b90c4d6c6596bb65af68f9e5121e67ebf0d89d3c909ceedfb32ce9575a7758ff080724e1ab5d5f43074ecb53a479af21ed03d7b6899c36631c0166f9d47e5e1d4528a5d3d3f744029c4b1c190cbfbad06f5f83f7ad0429fa9a2719c56ffe3783460e166de2d8>';
-            interfaceOptions += `\nI1 = ${i1Val}`;
+            i1Val = i1Input?.value.trim() || '<b 0xce000000010897a297ecc34cd6dd000044d0ec2e2e1ea2991f467ace4222129b5a098823784694b4897b9986ae0b7280135fa85e196d9ad980b150122129ce2a9379531b0fd3e871ca5fdb883c369832f730e272d7b8b74f393f9f0fa43f11e510ecb2219a52984410c204cf875585340c62238e14ad04dff382f2c200e0ee22fe743b9c6b8b043121c5710ec289f471c91ee414fca8b8be8419ae8ce7ffc53837f6ade262891895f3f4cecd31bc93ac5599e18e4f01b472362b8056c3172b513051f8322d1062997ef4a383b01706598d08d48c221d30e74c7ce000cdad36b706b1bf9b0607c32ec4b3203a4ee21ab64df336212b9758280803fcab14933b0e7ee1e04a7becce3e2633f4852585c567894a5f9efe9706a151b615856647e8b7dba69ab357b3982f554549bef9256111b2d67afde0b496f16962d4957ff654232aa9e845b61463908309cfd9de0a6abf5f425f577d7e5f6440652aa8da5f73588e82e9470f3b21b27b28c649506ae1a7f5f15b876f56abc4615f49911549b9bb39dd804fde182bd2dcec0c33bad9b138ca07d4a4a1650a2c2686acea05727e2a78962a840ae428f55627516e73c83dd8893b02358e81b524b4d99fda6df52b3a8d7a5291326e7ac9d773c5b43b8444554ef5aea104a738ed650aa979674bbed38da58ac29d87c29d387d80b526065baeb073ce65f075ccb56e47533aef357dceaa8293a523c5f6f790be90e4731123d3c6152a70576e90b4ab5bc5ead01576c68ab633ff7d36dcde2a0b2c68897e1acfc4d6483aaaeb635dd63c96b2b6a7a2bfe042f6aed82e5363aa850aace12ee3b1a93f30d8ab9537df483152a5527faca21efc9981b304f11fc95336f5b9637b174c5a0659e2b22e159a9fed4b8e93047371175b1d6d9cc8ab745f3b2281537d1c75fb9451871864efa5d184c38c185fd203de206751b92620f7c369e031d2041e152040920ac2c5ab5340bfc9d0561176abf10a147287ea90758575ac6a9f5ac9f390d0d5b23ee12af583383d994e22c0cf42383834bcd3ada1b3825a0664d8f3fb678261d57601ddf94a8a68a7c273a18c08aa99c7ad8c6c42eab67718843597ec9930457359dfdfbce024afc2dcf9348579a57d8d3490b2fa99f278f1c37d87dad9b221acd575192ffae1784f8e60ec7cee4068b6b988f0433d96d6a1b1865f4e155e9fe020279f434f3bf1bd117b717b92f6cd1cc9bea7d45978bcc3f24bda631a36910110a6ec06da35f8966c9279d130347594f13e9e07514fa370754d1424c0a1545c5070ef9fb2acd14233e8a50bfc5978b5bdf8bc1714731f798d21e2004117c61f2989dd44f0cf027b27d4019e81ed4b5c31db347c4a3a4d85048d7093cf16753d7b0d15e078f5c7a5205dc2f87e330a1f716738dce1c6180e9d02869b5546f1c4d2748f8c90d9693cba4e0079297d22fd61402dea32ff0eb69ebd65a5d0b687d87e3a8b2c42b648aa723c7c7daf37abcc4bb85caea2ee8f55bec20e913b3324ab8f5c3304f820d42ad1b9f2ffc1a3af9927136b4419e1e579ab4c2ae3c776d293d397d575df181e6cae0a4ada5d67ecea171cca3288d57c7bbdaee3befe745fb7d634f70386d873b90c4d6c6596bb65af68f9e5121e67ebf0d89d3c909ceedfb32ce9575a7758ff080724e1ab5d5f43074ecb53a479af21ed03d7b6899c36631c0166f9d47e5e1d4528a5d3d3f744029c4b1c190cbfbad06f5f83f7ad0429fa9a2719c56ffe3783460e166de2d8>';
+            if (i1Val) interfaceOptions += `\nI1 = ${i1Val}`;
+
             ['i2', 'i3', 'i4', 'i5'].forEach((id, index) => {
                 const val = document.getElementById(id)?.value.trim();
-                if (val) {
-                    interfaceOptions += `\nI${index + 2} = ${val}`;
-                }
+                if (val) interfaceOptions += `\nI${index + 2} = ${val}`;
             });
         } else if (isWiresock) {
-            // Если выбран клиент WireSock
             const idVal = document.getElementById('id')?.value || 'apteka.ru';
             const ipVal = document.getElementById('ip')?.value || 'quic';
             const ibVal = document.getElementById('ib')?.value || 'firefox';
@@ -331,19 +346,19 @@ function buildConfigString(server, wgPrivKeyBase64) {
 
     // --- AWG 3.0 ---
     const isAwg3 = document.getElementById('switchOption3')?.checked;
+    const getValue = (id) => {
+        const el = document.getElementById(id);
+        return el?.value.trim() || el?.placeholder || '';
+    };
+
+    const cpa = isAwg3 ? getValue('cpaInput') : '';
+    const rkat = isAwg3 ? getValue('rkatInput') : '';
+    const rt = isAwg3 ? getValue('rtInput') : '';
+    const rat = isAwg3 ? getValue('ratInput') : '';
+    const kt = isAwg3 ? getValue('ktInput') : '';
+    const mha = isAwg3 ? getValue('mhaInput') : '';
+
     if (isAwg3) {
-        const getValue = (id) => {
-            const el = document.getElementById(id);
-            return el?.value.trim() || el?.placeholder || '';
-        };
-
-        const cpa = getValue('cpaInput');
-        const rkat = getValue('rkatInput');
-        const rt = getValue('rtInput');
-        const rat = getValue('ratInput');
-        const kt = getValue('ktInput');
-        const mha = getValue('mhaInput');
-
         if (cpa) interfaceOptions += `\nContentPaddingAddition = ${cpa}`;
         if (rkat) interfaceOptions += `\nRekeyAfterTime = ${rkat}`;
         if (rt) interfaceOptions += `\nRekeyTimeout = ${rt}`;
@@ -352,13 +367,73 @@ function buildConfigString(server, wgPrivKeyBase64) {
         if (mha) interfaceOptions += `\nMaxHandshakeAttempts = ${mha}`;
     }
 
-    // --- Исключить LAN ---
+
+    let cleanName = server.name.replace('-FREE#', ' ').replace(/_/g, ' ');
+    
+    const flag = getFlagEmoji(server.exitCountry);
+    if (flag) {
+        cleanName = `${flag} ${cleanName}`;
+    }
+
+    // --- ВЫВОД ДЛЯ CLASH ---
+    if (isClash) {
+        let awgOptionsYaml = '';
+        if (isAwg1) {
+            awgOptionsYaml += `\n    jc: ${jc}\n    jmin: ${jmin}\n    jmax: ${jmax}\n    s1: 0\n    s2: 0\n    h1: 1\n    h2: 2\n    h3: 3\n    h4: 4`;
+        }
+        if (isAwg2) {
+            if (i1Val) awgOptionsYaml += `\n    i1: ${i1Val}`;
+            
+            ['i2', 'i3', 'i4', 'i5'].forEach((id) => {
+                const val = document.getElementById(id)?.value.trim();
+                if (val) awgOptionsYaml += `\n    ${id}: ${val}`;
+            });
+        }
+        if (isAwg3) {
+            if (cpa) awgOptionsYaml += `\n    content-padding-addition: ${cpa}`;
+            if (rkat) awgOptionsYaml += `\n    rekey-after-time: ${rkat}`;
+            if (rt) awgOptionsYaml += `\n    rekey-timeout: ${rt}`;
+            if (rat) awgOptionsYaml += `\n    reject-after-time: ${rat}`;
+            if (kt) awgOptionsYaml += `\n    keepalive-timeout: ${kt}`;
+            if (mha) awgOptionsYaml += `\n    max-handshake-attempts: ${mha}`;
+        }
+
+        const amneziaBlock = awgOptionsYaml ? `\n  amnezia-wg-option:${awgOptionsYaml}` : '';
+
+        return `proton: &proton
+  type: wireguard
+  ip: 10.2.0.2
+  ipv6: 2a07:b944::2:2
+  private-key: ${wgPrivKeyBase64}
+  udp: true
+  mtu: 1420
+  remote-dns-resolve: true
+  dns: [10.2.0.1, 2a07:b944::2:1]
+  port: ${selectedPort}${amneziaBlock}
+
+proxies:
+- name: "${cleanName}"
+  <<: *proton
+  server: ${server.entryIp}
+  public-key: ${server.publicKey}
+    
+proxy-groups:
+- name: ProtonVPN
+  type: select
+  icon: https://res.cloudinary.com/dbulfrlrz/image/upload/v1703162849/static/logos/icons/vpn_f9embt.svg
+  proxies:
+    - "${cleanName}"
+  url: 'http://speed.cloudflare.com/'
+rules:
+- MATCH,ProtonVPN`;
+    }
+
+    // --- СТАНДАРТНЫЙ ВЫВОД (.conf) ---
     const excludeLan = document.getElementById('switchOption4')?.checked;
     const allowedIPs = excludeLan 
         ? '1.0.0.0/8, 2.0.0.0/7, 4.0.0.0/6, 8.0.0.0/7, 11.0.0.0/8, 12.0.0.0/6, 16.0.0.0/4, 32.0.0.0/3, 64.0.0.0/3, 96.0.0.0/4, 112.0.0.0/5, 120.0.0.0/6, 124.0.0.0/7, 126.0.0.0/8, 128.0.0.0/3, 160.0.0.0/5, 168.0.0.0/8, 169.0.0.0/9, 169.128.0.0/10, 169.192.0.0/11, 169.224.0.0/12, 169.240.0.0/13, 169.248.0.0/14, 169.252.0.0/15, 169.255.0.0/16, 170.0.0.0/7, 172.0.0.0/12, 172.32.0.0/11, 172.64.0.0/10, 172.128.0.0/9, 173.0.0.0/8, 174.0.0.0/7, 176.0.0.0/4, 192.0.0.0/9, 192.128.0.0/11, 192.160.0.0/13, 192.169.0.0/16, 192.170.0.0/15, 192.172.0.0/14, 192.176.0.0/12, 192.192.0.0/10, 193.0.0.0/8, 194.0.0.0/7, 196.0.0.0/6, 200.0.0.0/5, 208.0.0.0/4, 224.0.0.0/4, ::/1, 8000::/2, c000::/3, e000::/4, f000::/5, f800::/6, fe00::/9, fec0::/10, ff00::/8'
         : '0.0.0.0/0, ::/0';
 
-    // --- PersistentKeepalive ---
     let peerOptions = '';
     const isKeepalive = document.getElementById('switchOption5')?.checked;
     if (isKeepalive) {
@@ -449,16 +524,17 @@ function downloadConfig() {
     const text = document.getElementById('wgConfigText').value;
     const select = document.getElementById('serverSelect');
     const selectedOption = select.options[select.selectedIndex];
+    const isClash = document.getElementById('clash')?.checked;
     
-    // Берем чистое имя сервера из data-атрибута (например, US-FREE#1)
     const serverName = selectedOption.dataset.name || selectedOption.value;
+    const ext = isClash ? 'yaml' : 'conf';
     
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${serverName}.conf`;
+    a.download = `${serverName}.${ext}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -475,6 +551,9 @@ async function downloadCountriesZip() {
     try {
         const privKey = await getOrGeneratePrivateKey();
         const zip = new JSZip();
+        
+        const isClash = document.getElementById('clash')?.checked;
+        const ext = isClash ? 'yaml' : 'conf';
 
         Object.keys(serversByCountryCache).forEach(country => {
             const servers = [...serversByCountryCache[country]];
@@ -483,9 +562,10 @@ async function downloadCountriesZip() {
             const bestServer = servers[0];
 
             if (bestServer) {
-                const cleanName = bestServer.name.replace('-FREE#', '_');
+                // Имя файла остается в безопасном формате с подчеркиванием
+                const fileName = bestServer.name.replace('-FREE#', '_');
                 const configText = buildConfigString(bestServer, privKey);
-                zip.file(`${cleanName}.conf`, configText);
+                zip.file(`${fileName}.${ext}`, configText);
             }
         });
 
@@ -510,10 +590,14 @@ async function downloadAllZip() {
         const privKey = await getOrGeneratePrivateKey();
         const zip = new JSZip();
 
+        const isClash = document.getElementById('clash')?.checked;
+        const ext = isClash ? 'yaml' : 'conf';
+
         serversList.forEach(server => {
-            const cleanName = server.name.replace('-FREE#', '_');
+            // Имя файла остается в безопасном формате с подчеркиванием
+            const fileName = server.name.replace('-FREE#', '_');
             const configText = buildConfigString(server, privKey);
-            zip.file(`${cleanName}.conf`, configText);
+            zip.file(`${fileName}.${ext}`, configText);
         });
 
         const content = await zip.generateAsync({ type: 'blob' });
@@ -693,3 +777,118 @@ function randomizeAwg3() {
         generateConfig();
     }
 }
+
+// Подтверждение если нажата клавиша Enter без Shift
+document.addEventListener('DOMContentLoaded', function() {
+
+const textareas = document.querySelectorAll('.jc');
+    
+    textareas.forEach(textarea => {
+        textarea.addEventListener('keydown', function(e) {       
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.blur();
+            }
+        });
+    });
+});
+
+// Открытие modal
+document.querySelector('.genbtn')?.addEventListener('click', function() {
+    const modal = document.getElementById('Modal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
+});
+
+// Закрытие модального окна при клике на крестик
+function closeModal() {
+    const modal = document.getElementById('Modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Закрытие модального окна при клике вне его области
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('Modal');
+    if (modal && event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// Обработчик для кнопки подтверждения в модальном окне
+const selectDomainBtn = document.getElementById('selectDomain');
+if (selectDomainBtn) {
+    selectDomainBtn.addEventListener('click', async function() {
+    const domainInput = document.getElementById('domain');
+    const domain = domainInput.value.trim();
+    
+    if (domain) {
+        const i1 = await generateI1FromDomain(domain);
+		document.getElementById('i1').value = i1;
+        closeModal();
+        generateConfig();
+		
+    } else {
+        alert('Пожалуйста, введите домен');
+    }
+});
+}
+
+function toggleClashSettings() {
+    const isClash = document.getElementById('clash')?.checked;
+    
+    const excludeLan = document.getElementById('switchOption4'); //[cite: 1]
+    const persistentKeepalive = document.getElementById('switchOption5'); //[cite: 1]
+    const keepaliveInput = document.getElementById('keepaliveInput'); //[cite: 1]
+
+    const label4 = excludeLan?.closest('.switch-label');
+    const label5 = persistentKeepalive?.closest('.switch-label');
+    
+    const track4 = label4?.querySelector('.switch-track');
+    const track5 = label5?.querySelector('.switch-track');
+
+    if (isClash) {
+        if (excludeLan) {
+            excludeLan.disabled = true;
+            excludeLan.checked = false; //[cite: 1]
+        }
+        if (label4) label4.classList.add('opacity-50', 'cursor-not-allowed');
+        if (track4) track4.classList.add('cursor-not-allowed');
+
+        if (persistentKeepalive) {
+            persistentKeepalive.disabled = true;
+            persistentKeepalive.checked = false; //[cite: 1]
+        }
+        if (label5) label5.classList.add('opacity-50', 'cursor-not-allowed');
+        if (track5) track5.classList.add('cursor-not-allowed');
+
+        if (keepaliveInput) {
+            keepaliveInput.disabled = true;
+            keepaliveInput.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    } else {
+        if (excludeLan) excludeLan.disabled = false;
+        if (label4) label4.classList.remove('opacity-50', 'cursor-not-allowed');
+        if (track4) track4.classList.remove('cursor-not-allowed');
+
+        if (persistentKeepalive) persistentKeepalive.disabled = false;
+        if (label5) label5.classList.remove('opacity-50', 'cursor-not-allowed');
+        if (track5) track5.classList.remove('cursor-not-allowed');
+
+        if (keepaliveInput) {
+            keepaliveInput.disabled = false;
+            keepaliveInput.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
+}
+
+// Привязываем обработчик к радиокнопкам выбора клиента и вызываем при загрузке[cite: 2]
+document.querySelectorAll('input[name="option"]').forEach(radio => {
+    radio.addEventListener('change', toggleClashSettings);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    toggleClashSettings();
+});
