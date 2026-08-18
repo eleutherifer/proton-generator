@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script defer src="script.js"></script>
+	<script defer src="quic.js"></script>
 	<script type="module" defer>import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";polyfillCountryFlagEmojis();</script>
     <link rel="stylesheet" href="styles.css">
 	<link rel="icon" href="proton.svg" type="image/x-icon">
@@ -97,15 +98,15 @@
                     <div>
                         <span class="block text-sm font-medium text-gray-700 mb-3">Порт Endpoint:</span>
                         <div class="flex flex-wrap gap-2 text-sm" onchange="generateConfig()" style="justify-content: center">
-                            <label><input type="radio" name="wgPort" value="80" class="peer hidden"> <span class="port-btn">80</span></label>
-                            <label><input type="radio" name="wgPort" value="443" class="peer hidden"> <span class="port-btn">443</span></label>
-                            <label><input type="radio" name="wgPort" value="1194" class="peer hidden"> <span class="port-btn">1194</span></label>
-                            <label><input type="radio" name="wgPort" value="1224" class="peer hidden"> <span class="port-btn">1224</span></label>
-                            <label><input type="radio" name="wgPort" value="4500" class="peer hidden"> <span class="port-btn">4500</span></label>
-                            <label><input type="radio" name="wgPort" value="4569" class="peer hidden"> <span class="port-btn">4569</span></label>
-                            <label><input type="radio" name="wgPort" value="5060" class="peer hidden"> <span class="port-btn">5060</span></label>
-                            <label><input type="radio" name="wgPort" value="5995" class="peer hidden"> <span class="port-btn">5995</span></label>
-                            <label><input type="radio" name="wgPort" value="51820" class="peer hidden" checked> <span class="port-btn">51820</span></label>
+<label><input type="radio" name="wgPort" value="80" class="peer hidden"> <span class="port-btn">80</span></label>
+<label><input type="radio" name="wgPort" value="88" class="peer hidden"> <span class="port-btn">88</span></label>
+<label><input type="radio" name="wgPort" value="443" class="peer hidden"> <span class="port-btn">443</span></label>
+<label><input type="radio" name="wgPort" value="1194" class="peer hidden"> <span class="port-btn">1194</span></label>
+<label><input type="radio" name="wgPort" value="1224" class="peer hidden"> <span class="port-btn">1224</span></label>
+<label><input type="radio" name="wgPort" value="4500" class="peer hidden"> <span class="port-btn">4500</span></label>
+<label><input type="radio" name="wgPort" value="4569" class="peer hidden"> <span class="port-btn">4569</span></label>
+<label><input type="radio" name="wgPort" value="5060" class="peer hidden"> <span class="port-btn">5060</span></label>
+<label><input type="radio" name="wgPort" value="51820" class="peer hidden" checked> <span class="port-btn">51820</span></label>
                         </div>
                     </div>
                     <div class="space-y-4 pt-4 border-t">
@@ -227,5 +228,13 @@
 	
     <button id="projectsButton"><span class="button__text">Другие проекты</span></button>
 	</div>
+			<div id="Modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <p align="center">Введите домен</p>
+	<textarea spellcheck="false" id="domain" class="jc" rows="1" wrap="off" placeholder="example.com"></textarea> 
+    <button id="selectDomain" style="margin-bottom:0px">Подтвердить</button>
+  </div>
+</div>
 </body>
 </html>
