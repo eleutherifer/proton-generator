@@ -280,7 +280,7 @@ async function getOrGeneratePrivateKey() {
     const certData = await apiRequest('/api/proton/certificate', {
         session: currentSession,
         clientPublicKey: pemPublicKey,
-        persistent: false
+        persistent: true
     });
 
     localStorage.setItem('wgPrivateKey', wgPrivKeyBase64);
