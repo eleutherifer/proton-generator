@@ -280,7 +280,7 @@ async function getOrGeneratePrivateKey() {
     const certData = await apiRequest('/api/proton/certificate', {
         session: currentSession,
         clientPublicKey: pemPublicKey,
-        persistent: false
+        persistent: true
     });
 
     localStorage.setItem('wgPrivateKey', wgPrivKeyBase64);
@@ -293,6 +293,8 @@ async function getOrGeneratePrivateKey() {
 function buildConfigString(server, wgPrivKeyBase64) {
     const selectedPort = document.querySelector('input[name="wgPort"]:checked')?.value || '51820';
     const isClash = document.getElementById('clash')?.checked;
+	const mtuInput = document.getElementById('mtu');
+    const mtuVal = mtuInput?.value.trim() || mtuInput?.placeholder || '1420';
 
     // --- AWG 1.0 ---
     const isAwg1 = document.getElementById('switchOption1')?.checked;
@@ -336,7 +338,7 @@ function buildConfigString(server, wgPrivKeyBase64) {
         } else if (isWiresock) {
             const idVal = document.getElementById('id')?.value || 'apteka.ru';
             const ipVal = document.getElementById('ip')?.value || 'quic';
-            const ibVal = document.getElementById('ib')?.value || 'firefox';
+            const ibVal = document.getElementById('ib')?.value || 'curl';
 
             if (idVal) interfaceOptions += `\nId = ${idVal}`;
             if (ipVal) interfaceOptions += `\nIp = ${ipVal}`;
@@ -367,6 +369,15 @@ function buildConfigString(server, wgPrivKeyBase64) {
         if (mha) interfaceOptions += `\nMaxHandshakeAttempts = ${mha}`;
     }
 
+    // --- AWG 3.1 ---
+const isAwg31 = document.getElementById('switchOption6')?.checked;
+const isRandomTrailers = document.getElementById('switchOption7')?.checked;
+const isDisableCookies = document.getElementById('switchOption8')?.checked;
+
+if (isAwg31) {
+    if (isRandomTrailers) interfaceOptions += `\nRandomTrailers = on`;
+    if (isDisableCookies) interfaceOptions += `\nDisableCookies = on`;
+}
 
     let cleanName = server.name.replace('-FREE#', ' ').replace(/_/g, ' ');
     
@@ -398,6 +409,11 @@ function buildConfigString(server, wgPrivKeyBase64) {
             if (mha) awgOptionsYaml += `\n    max-handshake-attempts: ${mha}`;
         }
 
+		if (isAwg31) {
+    if (isRandomTrailers) awgOptionsYaml += `\n    random-trailers: true`;
+    if (isDisableCookies) awgOptionsYaml += `\n    disable-cookies: true`;
+}
+
         const amneziaBlock = awgOptionsYaml ? `\n  amnezia-wg-option:${awgOptionsYaml}` : '';
 
         return `proton: &proton
@@ -406,7 +422,7 @@ function buildConfigString(server, wgPrivKeyBase64) {
   ipv6: 2a07:b944::2:2
   private-key: ${wgPrivKeyBase64}
   udp: true
-  mtu: 1420
+  mtu: ${mtuVal}
   remote-dns-resolve: true
   dns: [10.2.0.1, 2a07:b944::2:1]
   port: ${selectedPort}${amneziaBlock}
@@ -445,7 +461,8 @@ rules:
     return `[Interface]
 PrivateKey = ${wgPrivKeyBase64}
 Address = 10.2.0.2/32, 2a07:b944::2:2/128
-DNS = 10.2.0.1, 2a07:b944::2:1${interfaceOptions}
+DNS = 10.2.0.1, 2a07:b944::2:1
+MTU = ${mtuVal}${interfaceOptions}
 
 [Peer]
 # Server: ${server.name}
@@ -644,6 +661,7 @@ function initToggles() {
     const switch1 = document.getElementById('switchOption1');
     const switch2 = document.getElementById('switchOption2');
     const switch3 = document.getElementById('switchOption3');
+    const switch4 = document.getElementById('switchOption6');
 
     const updateVisibility = () => {
         document.querySelectorAll('.musor1').forEach(el => {
@@ -655,6 +673,9 @@ function initToggles() {
         document.querySelectorAll('.musor3').forEach(el => {
             el.style.display = switch3 && switch3.checked ? 'grid' : 'none';
         });
+		document.querySelectorAll('.musor4').forEach(el => {
+            el.style.display = switch4 && switch4.checked ? '' : 'none';
+        });
     };
 
     updateVisibility();
@@ -662,14 +683,18 @@ function initToggles() {
     if (switch1) switch1.addEventListener('change', updateVisibility);
     if (switch2) switch2.addEventListener('change', updateVisibility);
     if (switch3) switch3.addEventListener('change', updateVisibility);
+    if (switch4) switch4.addEventListener('change', updateVisibility);
     document.querySelectorAll('input[name="junk"]').forEach(radio => {
         radio.addEventListener('change', () => generateConfig());
     });
-    ['jc1', 'jmin1', 'jmax1', 'cpaInput', 'mhaInput', 'ktInput', 'ratInput', 'rkatInput', 'rtInput'].forEach(id => {document.getElementById(id)?.addEventListener('input', () => generateConfig());});
+    ['mtu', 'jc1', 'jmin1', 'jmax1', 'cpaInput', 'mhaInput', 'ktInput', 'ratInput', 'rkatInput', 'rtInput'].forEach(id => {document.getElementById(id)?.addEventListener('input', () => generateConfig());});
 
 	['i1', 'i2', 'i3', 'i4', 'i5', 'id', 'ip', 'ib'].forEach(id => {
     document.getElementById(id)?.addEventListener('input', () => generateConfig());
     document.getElementById(id)?.addEventListener('change', () => generateConfig());});
+   ['switchOption7', 'switchOption8'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', () => generateConfig());
+});
 }
 
 function initClientToggle() {
