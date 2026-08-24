@@ -375,8 +375,8 @@ const isRandomTrailers = document.getElementById('switchOption7')?.checked;
 const isDisableCookies = document.getElementById('switchOption8')?.checked;
 
 if (isAwg31) {
-    if (isRandomTrailers) interfaceOptions += `\nRandomTrailers = true`;
-    if (isDisableCookies) interfaceOptions += `\nDisableCookies = true`;
+    if (isRandomTrailers) interfaceOptions += `\nRandomTrailers = on`;
+    if (isDisableCookies) interfaceOptions += `\nDisableCookies = on`;
 }
 
     let cleanName = server.name.replace('-FREE#', ' ').replace(/_/g, ' ');
