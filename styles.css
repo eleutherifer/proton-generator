@@ -184,7 +184,7 @@ textarea:focus { outline: 1px solid #6D4AFF; }
   max-width: 50px;
   text-align: center;
 }
-#jmax1, #jmin1 {max-width:	30px}
+#jmax1, #jmin1, #mtu {max-width: 30px}
 
 #ib, #ip {
 	padding-inline: 4px;
@@ -289,7 +289,6 @@ vertical-align: initial;
   height: 100%;
   background-color: rgba(0,0,0,0.5);
 }
-
 .modal-content {
     background-color: #F4F4F4;
     margin: 15% auto;
@@ -300,7 +299,6 @@ vertical-align: initial;
     position: relative;
 	text-align: center;
 }
-
 .modal-content p{
 margin-bottom: 0px;
   margin-top: 5px;
@@ -308,7 +306,6 @@ margin-bottom: 0px;
   font-size: 20px;
   font-family: sans-serif;
 }
-
 .close {
   position: absolute;
   right: 5px;
@@ -318,10 +315,11 @@ margin-bottom: 0px;
   font-weight: bold;
   cursor: pointer;
 }
-
 .close:hover {
   color: black;
 }
+
+#musor4div {grid-template-columns: repeat(2, 1fr);}
 
 @media (max-width: 650px) {
   body {padding: 0 !important}
@@ -333,6 +331,8 @@ margin-bottom: 0px;
  #musor3div {grid-template-columns: auto !important}
  .amnezia-icon {margin-bottom: -11px}
  #dwnl {margin-inline: 0}
+ #labelmob {padding: 10px}
+ #musor4div {grid-template-columns: repeat(1, 1fr);}
 }
 
 
