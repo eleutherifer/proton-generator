@@ -546,7 +546,7 @@ function downloadConfig() {
     const serverName = selectedOption.dataset.name || selectedOption.value;
     const ext = isClash ? 'yaml' : 'conf';
     
-    const blob = new Blob([text], { type: 'text/plain' });
+    const blob = new Blob([text], { type: 'application/x-config; charset=utf-8' });
     const url = URL.createObjectURL(blob);
     
     const a = document.createElement('a');
